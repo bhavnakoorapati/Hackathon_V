@@ -1,0 +1,27 @@
+FOR INSERTION WHEN NEW STORE COMES
+------------------------------------
+
+CREATE OR REPLACE FUNCTION INSERT_NEW_REC (SNAME in varchar2, UNAME in varchar2, SADDR in varchar2,
+  SCITY in varchar2,  SPINCODE in number,  SSTATE in varchar2,  SPID in number,
+  QUAN in number ) RETURN VARCHAR2 AS 
+BEGIN
+  INSERT INTO store_details (store_id ,store_name, username ,address ,city  ,pincode ,state)  VALUES (storeid_seq.nextval,sname,uname,saddr,scity,spincode,sstate);
+  INSERT INTO store_product( store_id , prod_id ,quantity )  VALUES (storeid_seq.currval,spid,quan);
+commit;
+return null;
+END INSERT_NEW_REC;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ INVOICE NUMBERS
+-------------------
+CREATE OR REPLACE FUNCTION INVOICE_NUMB 
+(
+  ssid in number,
+  indate in date,
+  amt in number,
+  paymo in varchar2 
+) RETURN NUMBER AS 
+BEGIN
+  insert into invoice(invoice_no,store_id,invoice_date,amount,pay_mode) values (invoiceno_seq.nextval,ssid,indate,amt,paymo);
+  return invoiceno_seq.currval;
+END INVOICE_NUMB;

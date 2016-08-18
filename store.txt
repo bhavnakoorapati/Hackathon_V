@@ -1,0 +1,66 @@
+create table store_details
+(
+  store_id number,
+  store_name varchar (20) not null,
+  username varchar (20) not null,
+  address varchar (50) not null,
+  city varchar (20) not null,
+  pincode number not null,
+  state varchar (20) not null,
+  constraint cn_pk_storeid primary key(store_id)
+);
+create table product
+  (
+    prod_id number,
+    prod_name varchar (20) not null,
+    prod_quan number not null,
+    prod_price number (10,2) not null,
+    prod_type varchar (20) not null,
+    prod_brand varchar (20) not null,
+    constraint cn_pk_prodid primary key(prod_id)
+  );
+create table invoice
+  (
+    invoice_no number,
+    store_id number not null;
+    invoice_date date not null,
+    amount number (10,2) not null,
+    pay_mode varchar (10) not null,
+    constraint cn_pk_invoiceno primary key(invoice_no)
+  );
+create table customer
+  (
+    invoice_no number,
+    cust_name varchar (20) not null,
+    cust_addr varchar (50) not null,
+    city varchar (20) not null,
+    pincode number not null,
+    state varchar (20) not null,
+    constraint cn_pk_cinvoiceno primary key(invoice_no)
+  );
+
+
+create table sales
+  (
+    invoice_no number,
+    prod_id number not null,
+    quantity number not null,
+    constraint cn_fk_invoiceno foreign key(invoice_no) references invoice(invoice_no)
+  );
+create table return
+  (
+    return_id number,
+    store_id number not null,
+    invoice_no number not null,
+    return_date date not null,
+    return_amount number not null,
+    constraint cn_pk_returnid primary key(return_id)
+  );
+create table store_product
+ (
+   store_id number,
+   prod_id number,
+   quantity number,
+   constraint cn_fk_storeid foreign key(store_id) references store_details(store_id),
+   constraint cn_fk_prodid foreign key(prod_id) references product(prod_id)
+ );
