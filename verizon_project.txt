@@ -1,0 +1,142 @@
+CREATE OR REPLACE
+PROCEDURE REGISTER_NEW_STORE (USERNAME IN VARCHAR2) AS
+BEGIN
+
+create table store_username
+(
+  store_id number,
+  first_name varchar (20) not null,
+  last_name varchar (20) not null,
+  address varchar (50) not null,
+  city varchar (20) not null,
+  pincode number not null,
+  state varchar (20) not null,
+  constraint cn_pk_storeid primary key(store_id)
+);
+
+create table invoice_username
+  (
+    invoice_no number,
+    invoice_date date not null,
+    amount number (10,2) not null,
+    pay_mode varchar (10) not null,
+    constraint cn_pk_invoiceno primary key(invoice_no)
+  );
+
+create table customer_username
+  (
+    invoice_no number,
+    cust_name varchar (20) not null,
+    cust_addr varchar (50) not null,
+    city varchar (20) not null,
+    pincode number not null,
+    state varchar (20) not null,
+    constraint cn_pk_cinvoiceno primary key(invoice_no)
+  );
+
+create table product_username
+  (
+    prod_id number,
+    prod_name varchar (20) not null,
+    prod_quan number not null,
+    prod_price number (10,2) not null,
+    prod_type varchar (20) not null,
+    prod_brand varchar (20) not null,
+    constraint cn_pk_prodid primary key(prod_id)
+  );
+
+create table sales_username
+  (
+    invoice_no number,
+    prod_id number not null,
+    quantity number not null,
+    constraint cn_fk_invoiceno foreign key(invoice_no) references invoice_username(invoice_no)
+  );
+
+create table return_username
+  (
+    return_id number,
+    invoice_no number not null,
+    return_date date not null,
+    return_amount number not null,
+    constraint cn_pk_returnid primary key(return_id)
+  );
+
+create table transfer_username
+  (
+    transfer_id number,
+    transfer_date date not null,
+    prod_id number not null,
+    quantity number not null,
+    price number not null,
+    constraint cn_pk_transid primary key(transfer_id)
+  );
+
+END REGISTER_NEW_STORE;
+
+------------------------------------------------------------------------------------------------------------
+
+create sequence invoiceno_seq
+start with 100000
+increment by 1
+maxvalue 199999
+nocache
+nocycle
+
+create sequence prodid_seq
+start with 200000
+increment by 1
+maxvalue 299999
+nocache
+nocycle
+
+create sequence storeid_seq
+start with 300000
+increment by 1
+maxvalue 399999
+nocache
+nocycle
+
+create sequence transferid_seq
+start with 400000
+increment by 1
+maxvalue 499999
+nocache
+nocycle
+
+create sequence returnid_seq
+start with 500000
+increment by 1
+maxvalue 599999
+nocache
+nocycle
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+create table prod_det_username
+as select * from product_username;
+alter table prod_det_username
+modify prod_id number primary key;
+
+create table global_sales_username
+(
+  store_id number not null,
+  invoice_no number not null,
+  prod_id number not null,
+  quantity number not null
+);
+
+create table transfers_username
+(
+  transfers_id number,
+  store_id number not null,
+  transfers_date date,
+  constraint cn_pk_transid primary key(transfers_id)
+);
+
+create table prod_trans_username
+(
+  transfers_id number not null,
+  prod_id number not null,
+  quantity number not null
+);
