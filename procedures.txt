@@ -48,12 +48,11 @@ CREATE OR REPLACE FUNCTION ORDERS
   INID IN NUMBER 
 , PNAME IN VARCHAR2 
 , QUAN IN NUMBER 
-, RESL OUT VARCHAR2 
 ) RETURN VARCHAR2 AS 
+pid number;
 BEGIN
  select prod_id into pid from product where prod_name=PNAME;
  insert into sales (invoice_no,prod_id,quantity) values(inid,pid,quan);
  EXECUTE IMMEDIATE ('update store_product set quantity =(quantity-'||quan||') where prod_id='||pid||''); 
- resl:='success';
- return resl;
+ return success;
 END ORDERS;
