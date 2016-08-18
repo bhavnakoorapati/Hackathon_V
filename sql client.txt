@@ -1,0 +1,78 @@
+CREATE OR REPLACE PROCEDURE REGISTER_NEW_STORE 
+(USERNAME IN VARCHAR2) AS 
+BEGIN
+EXECUTE IMMEDIATE('create table store_'||username||'
+(
+  store_id number,
+  first_name varchar (20) not null,
+  last_name varchar (20) not null,
+  address varchar (50) not null,
+  city varchar (20) not null,
+  pincode number not null,
+  state varchar (20) not null,
+  constraint cn_pk_storeid primary key(store_id)
+)');
+commit;
+
+EXECUTE IMMEDIATE('create table invoice_'||username||'
+  (
+    invoice_no number,
+    invoice_date date not null,
+    amount number (10,2) not null,
+    pay_mode varchar (10) not null,
+    constraint cn_pk_invoiceno primary key(invoice_no)
+  )');
+
+EXECUTE IMMEDIATE('create table customer_'||username||'
+  (
+    invoice_no number,
+    cust_name varchar (20) not null,
+    cust_addr varchar (50) not null,
+    city varchar (20) not null,
+    pincode number not null,
+    state varchar (20) not null,
+    constraint cn_pk_cinvoiceno primary key(invoice_no)
+  )');
+
+EXECUTE IMMEDIATE('create table product_'||username||'
+  (
+    prod_id number,
+    prod_name varchar (20) not null,
+    prod_quan number not null,
+    prod_price number (10,2) not null,
+    prod_type varchar (20) not null,
+    prod_brand varchar (20) not null,
+    constraint cn_pk_prodid primary key(prod_id)
+  )');
+
+EXECUTE IMMEDIATE ('create table sales_'||username||'
+  (
+    invoice_no number,
+    prod_id number not null,
+    quantity number not null,
+    constraint cn_fk_invoiceno foreign key(invoice_no) references invoice_username(invoice_no)
+  )');
+
+EXECUTE IMMEDIATE('create table return_'||username||'
+  (
+    return_id number,
+    invoice_no number not null,
+    return_date date not null,
+    return_amount number not null,
+    constraint cn_pk_returnid primary key(return_id)
+  )');
+
+EXECUTE IMMEDIATE('create table transfer_'||username||'
+  (
+    transfer_id number,
+    transfer_date date not null,
+    prod_id number not null,
+    quantity number not null,
+    price number not null,
+    constraint cn_pk_transid primary key(transfer_id)
+  )');
+
+END REGISTER_NEW_STORE;
+
+
+
