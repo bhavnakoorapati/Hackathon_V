@@ -1,0 +1,63 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@page import="java.sql.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Welcome</title>
+</head>
+<body>
+<% 
+Connection con=null;
+try{
+	Class.forName("oracle.jdbc.driver.OracleDriver");	
+	con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","sys","admin@123");
+}catch(ClassNotFoundException er1){
+    System.out.println("Class not found exception: "+er1.getMessage());
+}
+catch(Exception e)
+{System.out.println("Any problem :"+e.getMessage());
+}
+%>
+<%
+//String uname=(String)session.getAttribute("t1");
+//String query="select * from store_"+uname;
+String query="select * from store_uname";
+Statement st= con.createStatement();
+ResultSet rs= st.executeQuery(query);
+while(rs.next())
+{
+ int id=(int)rs.getInt("Store_Id");
+ String fname=rs.getString("First_Name");
+ String lname=rs.getString("Last_Name");
+ String addrs=rs.getString("Address");
+ String city=rs.getString("City");
+ String state=rs.getString("State");
+ int pin=(int)rs.getInt("Pincode");
+}
+rs.close();
+st.close();
+%>
+
+Store Id :<p>document.getElementByName("id")</p>
+
+</body>
+</html>
+
+
+
+
+
+
+
+create table store_uname(
+store_id number,
+first_name varchar2(20),
+last_name varchar2(20),
+adddress varchar2(20),
+city varchar2(20),
+state varchar2(20),
+pincode number
+);
+insert into store_uname values(101,'jacob','thomas','velachery','chennai','tamilnadu',600035);
