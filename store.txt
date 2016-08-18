@@ -64,3 +64,13 @@ create table store_product
    constraint cn_fk_storeid foreign key(store_id) references store_details(store_id),
    constraint cn_fk_prodid foreign key(prod_id) references product(prod_id)
  );
+
+create table transfer
+  (
+    transfer_id number,
+    transfer_date date not null,
+    prod_id number not null,
+    quantity number not null,
+    price number not null,
+    constraint cn_pk_transid primary key(transfer_id)
+  );
