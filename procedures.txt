@@ -51,7 +51,7 @@ CREATE OR REPLACE FUNCTION ORDERS
 , RESL OUT VARCHAR2 
 ) RETURN VARCHAR2 AS 
 BEGIN
- insert into sales (invoice_no,prodid,quantity) values(inid,pid,quan);
+ insert into sales (invoice_no,prod_id,quantity) values(inid,pid,quan);
  EXECUTE IMMEDIATE ('update store_product set quantity =(quantity-'||quan||') where prod_id='||pid||''); 
  resl:='success';
  return resl;
