@@ -1,0 +1,34 @@
+create sequence invoiceno_seq
+start with 100000
+increment by 1
+maxvalue 199999
+nocache
+nocycle
+
+create sequence prodid_seq
+start with 200000
+increment by 1
+maxvalue 299999
+nocache
+nocycle
+
+create sequence storeid_seq
+start with 300000
+increment by 1
+maxvalue 399999
+nocache
+nocycle
+
+create sequence transferid_seq
+start with 400000
+increment by 1
+maxvalue 499999
+nocache
+nocycle
+
+create sequence returnid_seq
+start with 500000
+increment by 1
+maxvalue 599999
+nocache
+nocycle
