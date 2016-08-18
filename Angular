@@ -1,0 +1,100 @@
+1) student form
+functionalities:
+sort when title is clicked...red nd green to chk validn....form appears 
+when add student is clicked...only if all fields are valid will submit be enabled...search...
+
+
+
+<!DOCTYPE html>
+<html ng-app='StudentApp'>
+<head>
+<meta charset="ISO-8859-1">
+<title>Student details</title>
+
+<style>
+table,th,td{
+                border:1px solid grey;
+                border-collapse:collapse;
+                padding:5px;
+           }
+           
+           table tr:nth-child(odd){
+                             background-color:#f2f2f2;
+                      }
+                      
+           table tr:nth-child(even){
+              background-color:#ffffff;
+           }
+     .ng-invalid.ng-dirty{
+     border-color:red;
+     }                 
+            }
+     .ng-valid.ng-dirty{
+     border-color:green;
+     } 
+           
+</style>
+
+<script src="js/angular.min.js">
+</script>
+<script>
+       var app=angular.module("StudentApp",[]);
+       app.controller("StudentController",function(){
+         this.showForm=false;
+         this.orderVal='rollNo';
+         this.searchVal='';
+         this.student={};
+         this.students=studentsArray;
+         this.addStudent=function()
+          {
+              this.students.push(this.student);
+              this.student={};
+              this.showForm=false;
+           }   
+   } );
+
+studentsArray=[
+        {rollNo:1,name:"Medha",email:"m@gmail.com",grade:"A"},
+		{rollNo:2,name:"edha",email:"s@gmail.com",grade:"B"},
+		{rollNo:3,name:"dha",email:"md@gmail.com",grade:"D"},
+		{rollNo:4,name:"bedha",email:"mwr@gmail.com",grade:"A"},
+		{rollNo:5,name:"sedha",email:"metre@gmail.com",grade:"C"}
+         ];
+</script>
+
+</head>
+<body ng-controller="StudentController as sc" ng-init="x=10">
+<table>
+<tr><Th colspan="4" align="center">Student Form</Th></tr>
+<tr>
+    <th colspan="3" align="right">Search</th>
+    <th align="left"><input type="text" ng-model="sc.searchVal"/></th>
+</tr>
+<tr>
+<th><a href="" ng-click="sc.orderVal='rollNo';">Roll No</a></th>
+<th><a href="" ng-click="sc.orderVal='name';">Name</a></th>
+<th><a href="" ng-click="sc.orderVal='email';">Email</a></th>
+<th><a href="" ng-click="sc.orderVal='grade';">Grade</a></th>
+</tr>
+<tr ng-repeat="s in sc.students| orderBy:sc.orderVal|filter:sc.searchVal">
+       <td>{{s.rollNo}}</td>
+       <td>{{s.name|uppercase}}</td>
+       <td>{{s.email|lowercase}}</td>
+       <td>{{s.grade|uppercase}}</td>
+ </tr>
+</table>
+
+<a href="" ng-click="sc.showForm=true;">Add Student</a>
+<form name="studentForm" ng-show="sc.showForm" ng-submit="sc.addStudent()" novalidate="novalidate">
+   	  RollNo:<input type="text" ng-model="sc.student.rollNo" required="required" name="rollNo"/><br/>
+      Name:<input type="text" ng-model="sc.student.name" required="required"/><br/>
+      Email:<input type="text" ng-model="sc.student.email" required="required"/><br/>
+      Grade:<input type="text" ng-model="sc.student.grade" required="required"/><br/>
+      StudentForm is {{studentForm.$valid}}
+      <input ng-disabled="studentForm.$invalid" type="submit" value="Add Student"/>
+</form>
+</body>
+</html>
+-------------------------------
+
+2)
