@@ -1,0 +1,76 @@
+-----------------------------------------------------------------------------------------------------------------------------
+
+create table prod_det_username
+as select * from product_username;
+alter table prod_det_username
+modify prod_id number primary key;
+
+create table global_sales
+(
+  store_id number not null,
+  invoice_no number not null,
+  prod_id number not null,
+  quantity number not null
+);
+
+create table transfers
+(
+  transfers_id number,
+  store_id number not null,
+  transfers_date date,
+  constraint cn_pk_transid primary key(transfers_id)
+);
+
+create table prod_trans
+(
+  transfers_id number not null,
+  prod_id number not null,
+  quantity number not null
+);
+create table store_owners
+(
+first_name varchar2(20) not null,
+last_name varchar2(20),
+Username varchar2(10) not null,
+email varchar2(20) not null,
+password varchar2(20) not null,
+state varchar2(10) not null,
+city varchar2(10) not null,
+address varchar2(50) not null,
+pincode number  not null
+);
+
+-----------------------------------------------------------------------------------------------------------------------------
+insert into prod_det_username values(prodid_seq.nextval,'phone',5000,700,'P','moblink');
+insert into prod_det_username values(prodid_seq.nextval,'landli',5000,200,'P','hardwr');
+insert into prod_det_username values(prodid_seq.nextval,'landline_a',5000,300,'P','typewr');
+insert into prod_det_username values(prodid_seq.nextval,'mob',5000,10000,'P','samsung');
+insert into prod_det_username values(prodid_seq.nextval,'Ipad',5000,60000,'P','apple');
+insert into prod_det_username values(prodid_seq.nextval,'mobile',5000,20000,'P','nokia');
+insert into prod_det_username values(prodid_seq.nextval,'note',5000,30000,'P','lenovo');
+insert into prod_det_username values(prodid_seq.nextval,'tab',5000,18000,'P','lava');
+insert into prod_det_username values(prodid_seq.nextval,'landline_b',5000,900,'P','dlink');
+insert into prod_det_username values(prodid_seq.nextval,'landline_c',5000,800,'P','wirelike');
+insert into prod_det_username values(prodid_seq.nextval,'landline_d',5000,700,'P','linkon');
+insert into prod_det_username values(prodid_seq.nextval,'iphone',5000,80000,'P','apple');
+insert into prod_det_username values(prodid_seq.nextval,'charger',5000,200,'P','nokia');
+insert into prod_det_username values(prodid_seq.nextval,'turbocharger',5000,900,'P','motorola');
+insert into prod_det_username values(prodid_seq.nextval,'headphones',5000,1200,'P','skullcandy');
+insert into prod_det_username values(prodid_seq.nextval,'earplugs',5000,500,'P','nokia');
+insert into prod_det_username values(prodid_seq.nextval,'chargeboost',5000,2000,'P','chargeon');
+insert into prod_det_username values(prodid_seq.nextval,'cell',5000,20000,'P','appo');
+insert into prod_det_username values(prodid_seq.nextval,'motog3',5000,20000,'P','motorola');
+insert into prod_det_username values(prodid_seq.nextval,'cordless',5000,2000,'P','dlink');
+insert into prod_det_username values(prodid_seq.nextval,'dongle',5000,7000,'P','carryon');
+insert into prod_det_username values(prodid_seq.nextval,'modem',5000,20000,'P','linksure');
+insert into prod_det_username values(prodid_seq.nextval,'cellphone',5000,20000,'P','virginmobile');
+insert into prod_det_username values(prodid_seq.nextval,'Xplus',5000,30000,'P','Oneplusone');
+insert into prod_det_username values(prodid_seq.nextval,'mop',5000,12000,'P','xailo');
+insert into prod_det_username values(prodid_seq.nextval,'canvas',5000,24000,'P','micromax');
+insert into prod_det_username values(prodid_seq.nextval,'xperia',5000,28000,'P','sony');
+insert into prod_det_username values(prodid_seq.nextval,'headon',5000,2000,'P','sony');
+insert into prod_det_username values(prodid_seq.nextval,'doublecharge',5000,20000,'P','micro');
+insert into prod_det_username values(prodid_seq.nextval,'tele',5000,500,'P','moto');
+
+alter table prod_det_username rename to prod_det;
+-----------------------------------------------------------------------------------------------------------------------------------------------------
