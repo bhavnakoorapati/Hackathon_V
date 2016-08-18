@@ -17,11 +17,42 @@ END INSERT_NEW_REC;
 CREATE OR REPLACE FUNCTION INVOICE_NUMB 
 (
   ssid in number,
-  indate in date,
   amt in number,
   paymo in varchar2 
 ) RETURN NUMBER AS 
 BEGIN
-  insert into invoice(invoice_no,store_id,invoice_date,amount,pay_mode) values (invoiceno_seq.nextval,ssid,indate,amt,paymo);
+  insert into invoice(invoice_no,store_id,invoice_date,amount,pay_mode) values (invoiceno_seq.nextval,ssid,sysdate,amt,paymo);
   return invoiceno_seq.currval;
 END INVOICE_NUMB;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+RETURNS
+----------------------------------
+CREATE OR REPLACE FUNCTION RETURN_DETAILS 
+(
+  INID IN NUMBER 
+, AMT IN NUMBER 
+, ssid in NUMBER
+, RES OUT VARCHAR2 
+) RETURN VARCHAR2 AS 
+BEGIN
+insert into return (return_id,store_id,invoice_no,return_date,return_amount) values(returnid_seq.nextval,ssid,inid,sysdate,amt);
+res:='success';
+  RETURN res;
+END RETURN_DETAILS;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ORDERS
+---------------------------------------------------
+CREATE OR REPLACE FUNCTION ORDERS 
+(
+  INID IN NUMBER 
+, PID IN NUMBER 
+, QUAN IN NUMBER 
+, RESL OUT VARCHAR2 
+) RETURN VARCHAR2 AS 
+BEGIN
+ insert into sales (invoice_no,prodid,quantity) values(inid,pid,quan);
+ EXECUTE IMMEDIATE ('update store_product set quantity =(quantity-'||quan||') where prod_id='||pid||''); 
+ resl:='success';
+ return resl;
+END ORDERS;
