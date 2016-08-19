@@ -1,0 +1,15 @@
+create or replace FUNCTION ORDERWAREHOUSE (sid in number, pid in number) 
+RETURN VARCHAR2 AS 
+quan STORE_PRODUCT.QUANTITY%type;
+BEGIN
+  select quantity into quan from STORE_PRODUCT where store_id=sid and prod_id=pid;
+  if quan < 100 then
+  begin
+    update product set prod_quan=prod_quan-1000 where prod_id=pid;
+    update store_product set quantity=quantity+1000 where store_id=sid and prod_id=pid;
+    insert into transfer(transfer_id, store_id, prod_id, transfer_date, quantity) values (transferid_seq.nextval, sid, pid, sysdate, 1000);
+  end;
+  end if;
+  return 'ordered';
+  
+END ORDERWAREHOUSE;
