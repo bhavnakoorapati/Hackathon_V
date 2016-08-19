@@ -1,0 +1,19 @@
+create or replace FUNCTION NEWSTORE 
+(
+  UNAME IN VARCHAR2 
+, SNAME IN VARCHAR2 
+, SADDR IN VARCHAR2 
+, SCITY IN VARCHAR2 
+, SPIN IN NUMBER 
+, state in varchar2
+) RETURN VARCHAR2 AS 
+BEGIN
+  insert into store_details (store_id, store_name, username, address, city, pincode, state) values (storeid_seq.nextval, sname, uname, saddr, scity, spin, state);
+  for x in (select prod_id from product) 
+  loop
+    begin
+      insert into store_product (store_id, prod_id, quantity) values (storeid_seq.currval, x.prod_id, 50);
+    end;
+  end loop;
+  RETURN 'new store created';
+END NEWSTORE;
