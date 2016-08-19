@@ -1,7 +1,11 @@
-create or replace FUNCTION ORDERWAREHOUSE (sid in number, pid in number) 
+create or replace FUNCTION ORDERWAREHOUSE (uname in varchar2, pname in varchar2) 
 RETURN VARCHAR2 AS 
+sid STORE_PRODUCT.STORE_ID%type;
+pid STORE_PRODUCT.PROD_ID%type;
 quan STORE_PRODUCT.QUANTITY%type;
 BEGIN
+  select store_id into sid from store_details where username like uname;
+  select prod_id into pid from product where prod_name like pname;
   select quantity into quan from STORE_PRODUCT where store_id=sid and prod_id=pid;
   if quan < 100 then
   begin
